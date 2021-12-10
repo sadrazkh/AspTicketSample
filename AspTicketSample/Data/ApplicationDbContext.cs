@@ -14,6 +14,7 @@ namespace AspTicketSample.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Department>()
                 .HasMany(d => d.Users)
@@ -23,6 +24,11 @@ namespace AspTicketSample.Data
                 .HasOne(t => t.User)
                 .WithMany(u => u.Tickets)
                 .HasForeignKey(t => t.UserId);
+
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.Department)
+                .WithMany(d => d.Tickets)
+                .HasForeignKey(t => t.DepartmentId);
 
             modelBuilder.Entity<TicketMessage>()
                 .HasOne(m => m.Ticket)
